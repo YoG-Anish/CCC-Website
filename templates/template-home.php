@@ -20,42 +20,48 @@ get_header(); ?>
                     ?>
                 </div>
                 <div class="main-banner__icon-list">
+                    <?php
+                    $banner_image1 = get_field('banner_image1');
+                    $banner_image2 = get_field('banner_image2');
+                    $banner_image3 = get_field('banner_image3');
+                    ?>
                     <div class="main-banner__icon-list-item">
                         <span class="icon">
-                            <img src="<?php echo get_template_directory_uri(); ?>/image/leader.svg" alt="">
+                            <?php if ($banner_image1) : ?>
+                                <img src="<?php echo esc_url($banner_image1['url']); ?>" alt="<?php echo esc_attr($banner_image1['alt']); ?>">
+                            <?php endif; ?>
                         </span>
-                        <span class="text">Empowering Leaders</span>
+                        <span class="text"><?php echo get_field('banner_item1'); ?></span>
                     </div>
                     <div class="main-banner__icon-list-item">
                         <span class="icon">
-                            <img src="<?php echo get_template_directory_uri(); ?>/image/leader.svg" alt="">
+                            <?php if ($banner_image2) : ?>
+                                <img src="<?php echo esc_url($banner_image2['url']); ?>" alt="<?php echo esc_attr($banner_image2['alt']); ?>">
+                            <?php endif; ?>
                         </span>
-                        <span class="text">Elevating Performance</span>
+                        <span class="text"><?php echo get_field('banner_item2'); ?></span>
                     </div>
                     <div class="main-banner__icon-list-item">
                         <span class="icon">
-                            <img src="<?php echo get_template_directory_uri(); ?>/image/leader.svg" alt="">
+                            <?php if ($banner_image3) : ?>
+                                <img src="<?php echo esc_url($banner_image3['url']); ?>" alt="<?php echo esc_attr($banner_image3['alt']); ?>">
+                            <?php endif; ?>
                         </span>
-                        <span class="text">Supporting Well-Being</span>
+                        <span class="text"><?php echo get_field('banner_item3'); ?></span>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-
-
-
+2
     <section class="rich-text-section section">
         <div class="container">
             <div class="rich-text__content">
-                <?php
-                $banner = get_field('banner');
-                ?>
                 <div class="rich-text__text">
-                    <p><?php echo $banner['banner_content']; ?></p>
+                    <p><?php echo get_field('banner_description') ?></p>
                 </div>
                 <div class="rich-text__button">
-                    <a href="<?php echo $banner['link'] ?>" class="default-btn"><?php echo $banner['text_link'] ?></a>
+                    <a href="<?php echo get_field('banner_link') ?>" class="default-btn"><?php echo get_field('banner_link_text') ?></a>
                 </div>
             </div>
         </div>
@@ -64,31 +70,26 @@ get_header(); ?>
     <section class="about-section section">
         <div class="container">
             <div class="about__content">
-                <div class="about__image">
-                    <img src="<?php echo get_template_directory_uri(); ?>/image/about.png" alt="">
-                </div>
+                <?php
+                $home_about_image = get_field('home_about_image');
+                if ($home_about_image) : ?>
+                    <div class="about__image">
+                        <img src="<?php echo esc_url($home_about_image['url']); ?>" alt="<?php echo esc_attr($home_about_image['alt']); ?>">
+                    </div>
+                <?php endif; ?>
                 <div class="about__text">
                     <span class="colored-dots">
                         <span class="blue"></span>
                         <span class="yellow"></span>
                         <span class="red"></span>
                     </span>
-                    <h2 class="main-title h2">About CCC</h2>
-                    <p>Coaching Consulting Company delivers transformational outcomes through :</p>
-                    <ul class="icon-list-1">
-                        <li>Leadership & Mindset Coaching</li>
-                        <li>Strategic Consulting</li>
-                        <li>Practical, Science-backed Training</li>
-                        <li>Practical, Science-backed Training</li>
-                    </ul>
-                    <p>Coaching Consulting Company delivers transformational outcomes through :</p>
+                    <?php echo get_field('home_about_content') ?>
                     <div class="about__button">
-                        <a href="<?php echo home_url(); ?>/About" title="" class="default-btn">Learn More</a>
+                        <a href="<?php echo get_field('about_link') ?>/About" title="" class="default-btn"><?php echo get_field('about_link_text') ?></a>
                     </div>
                 </div>
             </div>
         </div>
-
     </section>
 
     <section class="team-listing-section section">
@@ -99,18 +100,13 @@ get_header(); ?>
                     <span class="yellow"></span>
                     <span class="red"></span>
                 </span>
-                <h2 class="main-title h2">Meet our Team</h2>
-                <p>Our dedicated team of experienced professionals is at the heart of what we do. With a deep knowledge
-                    of the local market and a passion for helping clients achieve their goals.</p>
+                <?php echo get_field('home_team_content') ?>
             </div>
-
-
             <?php
             $team_args = array(
                 'post_type' => 'team_member',
                 'posts_per_page' => 3,
             );
-
             $team_query = new WP_Query($team_args);
             if ($team_query->have_posts()) :
                 echo '<div class="team-listing__list">';
@@ -161,9 +157,6 @@ get_header(); ?>
                                         <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M16.2275 2.92963C15.4775 3.29713 14.7425 3.44638 13.9775 3.67213C13.1368 2.72338 11.8903 2.67088 10.6925 3.11938C9.49479 3.56788 8.71029 4.66438 8.72754 5.92213V6.67213C6.29379 6.73438 4.12629 5.62588 2.72754 3.67213C2.72754 3.67213 -0.408961 9.24688 5.72754 11.9221C4.32354 12.8574 2.92329 13.4881 1.22754 13.4221C3.70854 14.7744 6.41229 15.2394 8.75304 14.5599C11.438 13.7799 13.6445 11.7676 14.4913 8.75338C14.7439 7.83663 14.8693 6.88952 14.864 5.93863C14.8625 5.75188 15.9965 3.85963 16.2275 2.92888V2.92963Z" stroke="#282828" stroke-width="1.125" stroke-linecap="round" stroke-linejoin="round" />
                                         </svg>
-
-
-
                                     </a>
                                 <?php endif; ?>
                                 <?php if ($linkedin) : ?>
@@ -191,12 +184,6 @@ get_header(); ?>
                 echo '<p>No team members found.</p>';
             endif;
             ?>
-
-
-
-
-
-        </div>
         </div>
     </section>
 
@@ -209,20 +196,15 @@ get_header(); ?>
                         <span class="white"></span>
                         <span class="white"></span>
                     </span>
-                    <h2 class="main-title h2">Who We Work With</h2>
-                    <ul class="icon-list-2">
-                        <li>Airlines</li>
-                        <li>Corporates & Financial Institutions</li>
-                        <li>Healthcare & Public Sectors</li>
-                        <li>Non - Profit & Educational Organisations</li>
-                        <li>Professional Development Institutions</li>
-                        <li>Schools, Colleges & Universities</li>
-                        <li>Startups & Enterprenuers</li>
-                    </ul>
+                    <?php echo get_field('home_work_content') ?>
                 </div>
-                <div class="work-with__image">
-                    <img src="image/main-banner.jpg" alt="">
-                </div>
+                <?php
+                $home_work_image = get_field('home_work_image');
+                if ($home_work_image) : ?>
+                    <div class="work-with__image">
+                        <img src="<?php echo esc_url($home_work_image['url']); ?>" alt="<?php echo esc_attr($home_work_image['alt']); ?>">
+                    </div>
+                <?php endif; ?>
             </div>
         </div>
     </section>
@@ -235,22 +217,51 @@ get_header(); ?>
                     <span class="yellow"></span>
                     <span class="red"></span>
                 </span>
-                <h2 class="main-title h2">Our Services</h2>
+                <h2 class="main-title h2"><?php echo get_field('home_services_title') ?></h2>
             </div>
-            <div class="service__content">
-                <h3 class="service-sub-title">Culture is an outcome - built through intention, behaviour and leadership.</h3>
-                <p>We offer solution-focused services in leadership development, interpersonal skills, sales, customer service excellence, workplace well-being and organisational growth. We co-create customised programmes tailored to your industry and goals. Available as:</p>
-                <ul class="icon-list-1 column-2">
-                    <li>In-Person</li>
-                    <li>Individual or Group Sessions</li>
-                    <li>Half-Day, Full-Day, or Multiple-Day formats</li>
-                    <li>Sector-Specific Customisation</li>
-                </ul>
-            </div>
+            <?php echo get_field('home_services_content') ?>
+        </div>
         </div>
     </section>
     <!--  Programme section -->
-    <?php get_template_part('template-parts/content-programme'); ?>
+    <section class="program-section section neutral-bg">
+        <div class="container">
+            <div class="section-header center">
+                <span class="colored-dots">
+                    <span class="blue"></span>
+                    <span class="yellow"></span>
+                    <span class="red"></span>
+                </span>
+                <h2 class="main-title h2"><?php echo get_field('home_programmes_title') ?></h2>
+            </div>
+            <?php
+            $program_args = array(
+                'post_type' => 'programme',
+                'posts_per_page' => 4,
+                'orderby' => 'date',
+                'order' => 'ASC',
+            );
+            $program_query = new WP_Query($program_args);
+            if ($program_query->have_posts()) :
+                echo '<div class="program__list">';
+                while ($program_query->have_posts()) : $program_query->the_post();
+            ?>
+                    <div class="program__list-item">
+                        <a href="<?php the_permalink(); ?>">
+                            <h3 class="program__item-title"><?php the_title(); ?></h3>
+                        </a>
+                        <p class="program__item-text"><?php the_content(); ?></p>
+                    </div>
+            <?php endwhile;
+                echo '</div>';
+                wp_reset_postdata();
+            else :
+                echo '<p>No programmes found.</p>';
+
+            endif;
+            ?>
+        </div>
+    </section>
     <!--  End of Programme section -->
     <section class="partner-section section">
         <div class="container">
@@ -260,42 +271,43 @@ get_header(); ?>
                     <span class="yellow"></span>
                     <span class="red"></span>
                 </span>
-                <h2 class="main-title h2">Trusted Partners</h2>
-                <p>We Proudly work with</p>
+                <?php echo get_field('home_partner_heading') ?>
             </div>
             <div class="parnter__wrapper">
                 <div class="partner__banner-image">
-                    <img src="<?php echo get_template_directory_uri(); ?>/image/main-banner.jpg" alt="">
+                    <?php
+                    $home_partner_image = get_field('home_partner_image');
+                    if ($home_partner_image) : ?>
+                        <img src="<?php echo esc_url($home_partner_image['url']); ?>" alt="<?php echo esc_attr($home_partner_image['alt']); ?>">
+                    <?php endif; ?>
                 </div>
                 <div class="partner__lists-wrapper">
                     <div class="partner__lists">
-                        <div class="parnter__item">
-                            <span class="partner__icon">
-                                <img src="<?php echo get_template_directory_uri(); ?>/image/partner.png" alt="">
-                            </span>
-                            <span class="parnter__name">Commerzbank AG (UK, USA, Europe)</span>
-                        </div>
-                        <div class="parnter__item">
-                            <span class="partner__icon">
-                                <img src="<?php echo get_template_directory_uri(); ?>/image/partner.png" alt="">
-                            </span>
-                            <span class="parnter__name">LexisNexis & RELX Group (Global)</span>
-                        </div>
-                        <div class="parnter__item">
-                            <span class="partner__icon">
-                                <img src="<?php echo get_template_directory_uri(); ?>/image/partner.png" alt="">
-                            </span>
-                            <span class="parnter__name">Copyright Agency (Australia)</span>
-                        </div>
-                        <div class="parnter__item">
-                            <span class="partner__icon">
-                                <img src="<?php echo get_template_directory_uri(); ?>/image/partner.png" alt="">
-                            </span>
-                            <span class="parnter__name">NHS MINT Ealing North (UK)</span>
-                        </div>
+                        <?php
+                        $partner_args = array(
+                            'post_type' => 'partner',
+                            'posts_per_page' => 4,
+                        )
+                        ?>
+                        <?php
+                        $partner_query = new WP_Query($partner_args);
+                        if ($partner_query->have_posts()) :
+                            while ($partner_query->have_posts()) : $partner_query->the_post(); ?>
+                                <div class="parnter__item">
+                                    <span class="partner__icon">
+                                        <img src="<?php echo get_template_directory_uri(); ?>/image/partner.png" alt="">
+                                    </span>
+                                    <span class="parnter__name"><?php the_title(); ?></span>
+                                </div>
+                        <?php endwhile;
+                            wp_reset_postdata();
+                        else :
+                            echo '<p>No programmes found.</p>';
+                        endif;
+                        ?>
                     </div>
                     <div class="partner__more-btn-wrapper">
-                        <a href="<?php echo home_url(); ?>/about" class="default-btn">More</a>
+                        <a href="<?php echo get_field('home_partner_text_link') ?>" class="default-btn"><?php echo get_field('home_partner_text') ?></a>
                     </div>
                 </div>
             </div>
@@ -310,50 +322,41 @@ get_header(); ?>
                     <span class="yellow"></span>
                     <span class="red"></span>
                 </span>
-                <h2 class="main-title h2">Community Engagement</h2>
-                <p>SUPPORTING</p>
+                <?php echo get_field('home_community_heading') ?>
             </div>
             <div class="engagement-list-wrapper">
-                <div class="engagement-list">
-                    <div class="engagement-list__item">
-                        <div class="engagement-list__icon">
-                            <img src="<?php echo get_template_directory_uri(); ?>/image/engagement.svg" alt="">
-                        </div>
-                        <div class="engagement-list__info">
-                            <h3 class="engagement-list__title">Ace International Business School</h3>
-                            <span class="engagement-list__location">Kathmandu Nepal</span>
-                        </div>
+                <?php
+                $community_args = array(
+                    'post_type'      => 'community',
+                    'posts_per_page' => 4,
+                    'post_status'    => 'publish'
+                );
+                $community_query = new WP_Query($community_args);
+                if ($community_query->have_posts()) :
+                ?>
+                    <div class="engagement-list">
+                        <?php
+                        while ($community_query->have_posts()) : $community_query->the_post();
+                        ?>
+                            <div class="engagement-list__item">
+                                <div class="engagement-list__icon">
+                                    <img src="<?php echo get_template_directory_uri(); ?>/image/engagement.svg" alt="">
+                                </div>
+                                <div class="engagement-list__info">
+                                    <h3 class="engagement-list__title"><?php the_title(); ?></h3>
+                                    <span class="engagement-list__location">
+                                        <?php echo esc_html(get_field('community_location')); ?>
+                                    </span>
+                                </div>
+                            </div>
+                        <?php endwhile; ?>
                     </div>
-                    <div class="engagement-list__item">
-                        <div class="engagement-list__icon">
-                            <img src="<?php echo get_template_directory_uri(); ?>/image/engagement.svg" alt="">
-                        </div>
-                        <div class="engagement-list__info">
-                            <h3 class="engagement-list__title">Ace International Business School</h3>
-                            <span class="engagement-list__location">Kathmandu Nepal</span>
-                        </div>
-                    </div>
-                    <div class="engagement-list__item">
-                        <div class="engagement-list__icon">
-                            <img src="<?php echo get_template_directory_uri(); ?>/image/engagement.svg" alt="">
-                        </div>
-                        <div class="engagement-list__info">
-                            <h3 class="engagement-list__title">St. Xavier’s School</h3>
-                            <span class="engagement-list__location">Kathmandu Nepal</span>
-                        </div>
-                    </div>
-                    <div class="engagement-list__item">
-                        <div class="engagement-list__icon">
-                            <img src="<?php echo get_template_directory_uri(); ?>/image/engagement.svg" alt="">
-                        </div>
-                        <div class="engagement-list__info">
-                            <h3 class="engagement-list__title">British Forces Broadcasting Service (BFBS)</h3>
-                            <span class="engagement-list__location">UK</span>
-                        </div>
-                    </div>
-                </div>
+                <?php
+                    wp_reset_postdata();
+                endif;
+                ?>
                 <div class="engagement-more-btn-wrapper">
-                    <a href="<?php echo home_url(); ?>/about" class="default-btn">More</a>
+                    <a href="<?php echo get_field('home_community_text_link') ?>" class="default-btn"><?php echo get_field('home_community_text') ?></a>
                 </div>
             </div>
         </div>
@@ -367,39 +370,47 @@ get_header(); ?>
                     <span class="yellow"></span>
                     <span class="red"></span>
                 </span>
-                <h2 class="main-title h2">Why Choose Us ?</h2>
+                <h2 class="main-title h2"><?php echo get_field('home_whyus_heading') ?></h2>
             </div>
             <div class="icon-list-wrapper">
-                <div class="icon-list__list">
-                    <div class="icon-list__item">
-                        <span class="icon-list__icon">
-                            <img src="<?php echo get_template_directory_uri(); ?>/image/icon1.svg" alt="">
-                        </span>
-                        <span class="icon-list__text">A commitment to meaningful transformation</span>
+                <?php
+                // 1. Get the data from your Pods repeater field.
+                // Change 'your_pods_field_name' to the actual name of your field in Pods!
+                // The 'false' at the end tells WordPress to give us an array (a list) of all the repeated items.
+                $list_items = get_post_meta(get_the_ID(), 'why_choose_us_content', false);
+
+                // 2. Check if the field actually has data before we output the HTML
+                if (! empty($list_items)) :
+                ?>
+                    <div class="icon-list__list">
+                        <?php
+                        // 3. Loop through each text item from Pods
+                        foreach ($list_items as $item_text) :
+                        ?>
+                            <div class="icon-list__item">
+                                <span class="icon-list__icon">
+                                    <!-- This image stays exactly the same for every row -->
+                                    <img src="<?php echo get_template_directory_uri(); ?>/image/icon1.svg" alt="">
+                                </span>
+
+                                <span class="icon-list__text">
+                                    <!-- This text changes dynamically from your Pods field -->
+                                    <?php echo esc_html($item_text); ?>
+                                </span>
+                            </div>
+                        <?php endforeach; ?>
                     </div>
-                    <div class="icon-list__item">
-                        <span class="icon-list__icon">
-                            <img src="<?php echo get_template_directory_uri(); ?>/image/icon1.svg" alt="">
-                        </span>
-                        <span class="icon-list__text">A commitment to meaningful transformation</span>
-                    </div>
-                    <div class="icon-list__item">
-                        <span class="icon-list__icon">
-                            <img src="<?php echo get_template_directory_uri(); ?>/image/icon1.svg" alt="">
-                        </span>
-                        <span class="icon-list__text">A commitment to meaningful transformation</span>
-                    </div>
-                    <div class="icon-list__item">
-                        <span class="icon-list__icon">
-                            <img src="<?php echo get_template_directory_uri(); ?>/image/icon1.svg" alt="">
-                        </span>
-                        <span class="icon-list__text">A commitment to meaningful transformation</span>
-                    </div>
-                </div>
+                <?php endif; ?>
                 <div class="icon-list__image">
-                    <img src="<?php echo get_template_directory_uri(); ?>/image/main-banner.jpg" alt="">
+                    <?php
+                    $home_whyus_image = get_field('home_whyus_image');
+                    if ($home_whyus_image) : ?>
+                        <img src="<?php echo esc_url($home_whyus_image['url']); ?>" alt="<?php echo esc_attr($home_whyus_image['alt']); ?>">
+                    <?php endif; ?>
                 </div>
             </div>
+
+        </div>
         </div>
     </section>
 
@@ -411,13 +422,12 @@ get_header(); ?>
                     <span class="yellow"></span>
                     <span class="red"></span>
                 </span>
-                <h2 class="main-title h2"> Testimonials</h2>
+                <h2 class="main-title h2"> <?php echo get_field('home_testimonials_title') ?></h2>
             </div>
             <div class="testimonial-slider-wrapper">
                 <div class="splide">
                     <div class="splide__track">
                         <div class="splide__list">
-
                             <?php
                             $tax_args = array(
                                 'post_type' => 'testimonial',
@@ -427,9 +437,7 @@ get_header(); ?>
                             $tax_query = new WP_Query($tax_args);
                             if ($tax_query->have_posts()) :
                                 while ($tax_query->have_posts()) : $tax_query->the_post();
-
-                                    $position = get_field('position');
-                            ?>
+                                    $position = get_field('position'); ?>
                                     <div class="splide__slide">
                                         <div class="testimonial-card">
                                             <div class="testimonial-card__image">
@@ -451,8 +459,6 @@ get_header(); ?>
                                 echo '<p>No testimonials found.</p>';
                             endif;
                             ?>
-
-
                         </div>
                     </div>
                     <div class="splide__arrows">

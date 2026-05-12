@@ -184,6 +184,74 @@ function ccc_register_cpt()
         'supports'           => array('title', 'editor', 'thumbnail', 'custom-fields'),
     );
     register_post_type('programme', $args);
+
+    // ccc partners
+    $labels = array(
+        'name'              => _x('Partners', 'Post Type General Name', 'ccc'),
+        'singular_name'     => _x('Partner', 'Post Type Singular Name', 'ccc'),
+        'menu_name'        => __('Partners', 'ccc'),
+        'name_admin_bar'   => __('Partner', 'ccc'),
+        'add_new'          => __('Add New', 'ccc'),
+        'add_new_item'     => __('Add New Partner', 'ccc'),
+        'new_item'         => __('New Partner', 'ccc'),
+        'edit_item'        => __('Edit Partner', 'ccc'),
+        'view_item'        => __('View Partner', 'ccc'),
+        'all_items'        => __('All Partners', 'ccc'),
+        'search_items'     => __('Search Partners', 'ccc'),
+        'parent_item_colon' => __('Parent Partners:', 'ccc'),
+        'not_found'        => __('No partners found.', 'ccc'),
+        'not_found_in_trash' => __('No partners found in Trash.', 'ccc')
+    );
+    $args = array(
+        'labels'             => $labels,
+        'public'             => true,
+        'publicly_queryable' => true,
+        'show_ui'            => true,
+        'show_in_menu'       => true,
+        'query_var'          => true,
+        'rewrite'            => array('slug' => 'partner'),
+        'capability_type'    => 'post',
+        'has_archive'        => true,
+        'hierarchical'       => false,
+        'menu_position'      => 9,
+        'show_in_rest'       => true,    
+        'supports'           => array('title', 'editor', 'thumbnail', 'custom-fields'),
+    );
+    register_post_type('partner', $args);
+
+    //ccc community
+    $labels = array(
+        'name'              => _x('Communities', 'Post Type General Name', 'ccc'),
+        'singular_name'     => _x('Community', 'Post Type Singular Name', 'ccc'),
+        'menu_name'        => __('Communities', 'ccc'),
+        'name_admin_bar'   => __('Community', 'ccc'),
+        'add_new'          => __('Add New', 'ccc'),
+        'add_new_item'     => __('Add New Community', 'ccc'),
+        'new_item'         => __('New Community', 'ccc'),
+        'edit_item'        => __('Edit Community', 'ccc'),
+        'view_item'        => __('View Community', 'ccc'),
+        'all_items'        => __('All Communities', 'ccc'),
+        'search_items'     => __('Search Communities', 'ccc'),
+        'parent_item_colon' => __('Parent Communities:', 'ccc'),
+        'not_found'        => __('No communities found.', 'ccc'),
+        'not_found_in_trash' => __('No communities found in Trash.', 'ccc')
+    );
+    $args = array(
+        'labels'             => $labels,
+        'public'             => true,            
+        'publicly_queryable' => true,
+        'show_ui'            => true,
+        'show_in_menu'       => true,
+        'query_var'          => true,
+        'rewrite'            => array('slug' => 'community'),
+        'capability_type'    => 'post',
+        'has_archive'        => true,
+        'hierarchical'       => false,
+        'menu_position'      => 10,
+        'show_in_rest'       => true,
+        'supports'           => array('title', 'editor', 'thumbnail', 'custom-fields'),
+    );    
+    register_post_type('community', $args);
 }
 add_action('init', 'ccc_register_cpt');
 
